@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordReader - Document Language Learning</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">📖 <span>WordReader</span></div>
+      <nav>
+        <button class="nav-btn active" data-view="reader">Tài liệu</button>
+        <button class="nav-btn" data-view="library">📚 Thư viện</button>
+        <button class="nav-btn" data-view="flashcards">🧠 Flashcards</button>
+      </nav>
+      <div class="top-actions">
+        <button id="uploadTopBtn" class="primary-btn">＋ Tải tài liệu</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-title">TÀI LIỆU CỦA TÔI</div>
+        <div id="documentList" class="document-list"></div>
+        <button id="uploadSideBtn" class="upload-side">＋ Thêm tài liệu</button>
+      </aside>
+
+      <section class="content">
+        <section id="readerView" class="view active">
+          <div class="reader-toolbar">
+            <div>
+              <div id="documentTitle" class="document-title">Chưa có tài liệu</div>
+              <div id="documentMeta" class="muted">Tải PDF, DOCX, PPTX hoặc ảnh để bắt đầu.</div>
+            </div>
+            <div class="toolbar-actions">
+              <button id="fontMinus">A−</button>
+              <button id="fontPlus">A＋</button>
+              <button id="resetReader">↺</button>
+            </div>
+          </div>
+
+          <div id="emptyReader" class="empty-state">
+            <div class="empty-icon">📄</div>
+            <h2>Tải tài liệu để bắt đầu học</h2>
+            <p>Bản MVP này đọc text trực tiếp, hiển thị ảnh và cung cấp lớp học từ vựng.</p>
+            <button id="uploadEmptyBtn" class="primary-btn">＋ Chọn tài liệu</button>
+            <p class="small-note">PDF text, TXT, DOCX và ảnh được hỗ trợ ở mức MVP. OCR/AI thật cần backend.</p>
+          </div>
+
+          <div id="readerContainer" class="reader-container hidden"></div>
+        </section>
+
+        <section id="libraryView" class="view">
+          <div class="page-heading">
+            <div>
+              <h1>📚 Thư viện từ vựng</h1>
+              <p class="muted">Từ được lưu sẽ tự động nhóm theo tài liệu.</p>
+            </div>
+          </div>
+          <div id="libraryContainer"></div>
+        </section>
+
+        <section id="flashcardsView" class="view">
+          <div class="page-heading">
+            <div>
+              <h1>🧠 Flashcards</h1>
+              <p class="muted">Hệ thống ôn tập đơn giản theo Again / Hard / Good / Easy.</p>
+            </div>
+          </div>
+          <div id="flashcardContainer"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <input id="fileInput" type="file" hidden accept=".pdf,.docx,.pptx,.txt,.md,.jpg,.jpeg,.png,.webp">
+
+  <div id="wordPopup" class="popup hidden">
+    <div class="popup-header">
+      <div>
+        <div id="popupWord" class="popup-word">word</div>
+        <div id="popupPronunciation" class="pronunciation">/…/</div>
+      </div>
+      <div class="popup-head-actions">
+        <button id="speakBtn" title="Phát âm">🔊</button>
+        <button id="closePopup" title="Đóng">×</button>
+      </div>
+    </div>
+    <div class="popup-body">
+      <div class="info-label">NGHĨA TRONG NGỮ CẢNH</div>
+      <div id="contextMeaning" class="meaning-box">Đang phân tích...</div>
+
+      <div class="info-label">NGHĨA THƯỜNG DÙNG</div>
+      <ul id="commonMeanings" class="meaning-list"></ul>
+
+      <div class="info-label">VÍ DỤ</div>
+      <div id="popupExample" class="example-box"></div>
+    </div>
+    <div class="popup-footer">
+      <button id="saveWordBtn" class="primary-btn full">＋ Lưu vào thư viện</button>
+    </div>
+  </div>
+
+  <div id="translationModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <div class="modal-label">AI TRANSLATION</div>
+          <h2 id="translationTitle">Bản dịch</h2>
+        </div>
+        <button id="closeTranslation">×</button>
+      </div>
+      <div class="original-text" id="translationOriginal"></div>
+      <div class="translation-result" id="translationResult"></div>
+      <div class="modal-footer">
+        <button id="closeTranslation2" class="secondary-btn">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- Optional CDN libraries. App still opens without them. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module" id="pdfModule"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
